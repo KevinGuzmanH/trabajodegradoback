@@ -13,13 +13,6 @@ class TMDbRepository:
     def __init__(self):
         self.client = TMDbClient()
 
-    def get_streaming_platforms(self, imdb_id: str):
-        # Aquí debes mapear el imdb_id al movie_id de TMDb
-        # Este paso depende de tu lógica para convertir entre IDs
-        movie_id = self._map_imdb_to_tmdb(imdb_id)
-        return self.client.fetch_streaming_platforms(movie_id)
+    def get_streaming_platforms(self, omdb_title: str):
+        return self.client.fetch_streaming_platforms(omdb_title)
 
-    def _map_imdb_to_tmdb(self, imdb_id: str):
-        # Implementa la lógica para mapear imdb_id a tmdb_id
-        # Esto podría involucrar otra consulta a la API de TMDb
-        return 75780  # Ejemplo estático

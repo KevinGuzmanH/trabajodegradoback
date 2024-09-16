@@ -1,16 +1,19 @@
-# This is a sample Python script.
+import requests
+import pandas as pd
 
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+BASE_URL = "http://www.omdbapi.com/"
+
+params = {
+    'apikey': '8bfd7b9c',
+    't': 'jack+Reacher'
+}
+response = requests.get(BASE_URL, params=params)
+if response.status_code != 200:
+    raise Exception(f"OMDb API Error: {response.status_code}")
+
+movie_data = response.json()
+
+movie_df = pd.DataFrame([movie_data])
+print('Dataframe Creado')
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
