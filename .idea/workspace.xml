@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c29dfbb-60af-4773-a9f9-ad617b585484" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/TrabajodeGradoBack.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TrabajodeGradoBack.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/omdb_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/omdb_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/repositories.py" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/repositories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/tmdb_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/tmdb_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +98,13 @@
       <workItem from="1724175103628" duration="2217000" />
       <workItem from="1725217250586" duration="8872000" />
       <workItem from="1726247840311" duration="1417000" />
-      <workItem from="1726512064269" duration="299000" />
+      <workItem from="1726512064269" duration="1190000" />
+      <workItem from="1726593024897" duration="4458000" />
+      <workItem from="1726680605511" duration="825000" />
+      <workItem from="1727111698714" duration="910000" />
+      <workItem from="1727197918914" duration="1356000" />
+      <workItem from="1727637380957" duration="4298000" />
+      <workItem from="1727702738515" duration="9252000" />
     </task>
     <servers />
   </component>
@@ -120,8 +122,19 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/routes.py</url>
+          <line>88</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TrabajodeGradoBack$Flask.coverage" NAME="Flask Coverage Results" MODIFIED="1725402108384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/TrabajodeGradoBack$Flask.coverage" NAME="Flask Coverage Results" MODIFIED="1727731342612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/TrabajodeGradoBack$.coverage" NAME=" Coverage Results" MODIFIED="1725385001515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>
