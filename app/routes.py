@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 
 from domain.models import UserPreference,User,db
 from domain.services import TMDbService
+import json
 
 def configure_routes(app):
     main_blueprint = Blueprint('main', __name__)
@@ -80,7 +81,7 @@ def configure_routes(app):
         page = request.args.get('page', 1)
         content = service.get_content_by_genre(genre_id, page)
         if content:
-            return jsonify(content), 200
+            return content, 200
         else:
             return jsonify({'error': 'No se encontró contenido para este género'}), 404
 
@@ -104,12 +105,12 @@ def configure_routes(app):
                         age=age, gender=gender, country=country)
 
         db.session.add(new_user)
-        db.session.commit()  # Save the user first to get the user_id
+        db.session.commit()
         # Procesar las preferencias del usuario
         preferences = {
             "frecuencia_visualizacion": data.get('frecuenciavisualizacion'),
-            "generos_favoritos": data.get('generofavorito', []),  # Lista de géneros favoritos
-            "plataformas_favoritas": data.get('plataformasfavoritas', []),  # Lista de plataformas favoritas
+            "generos_favoritos": data.get('generofavorito', []),
+            "plataformas_favoritas": data.get('plataformasfavoritas', []),
             "actor_favorito": data.get('actorfavorito')
         }
 
@@ -173,4 +174,72 @@ def configure_routes(app):
             }
         }), 200
 
+    @app.route('/recommendations/<int:user_id>', methods=['GET'])
+    def recommend(user_id):
+        # Verificamos si el servicio de IA está disponible
+        from app import ia_service
+
+        # Verificamos si el servicio de IA está disponible
+        if ia_service is None:
+            return jsonify({"error": "IA service not initialized"}), 500
+
+        # Obtener las recomendaciones para el usuario
+        recommendations = ia_service.get_recommendations_for_user(user_id)
+
+        # Example: [[3, 11, 12, 22, 13, 12, 11, 15, 22, 55, 66, 23, 51, 55, 66, 75]]
+        # Ignore the first item (user_id), and work with the rest of the array
+        if not recommendations or len(recommendations) == 0:
+            return jsonify({"error": "No recommendations found"}), 404
+
+        # Define the genres in their respective order
+        genre_list = [
+            {"id": 28, "name": "Action"},
+            {"id": 12, "name": "Adventure"},
+            {"id": 16, "name": "Animation"},
+            {"id": 35, "name": "Comedy"},
+            {"id": 80, "name": "Crime"},
+            {"id": 99, "name": "Documentary"},
+            {"id": 18, "name": "Drama"},
+            {"id": 10751, "name": "Family"},
+            {"id": 14, "name": "Fantasy"},
+            {"id": 36, "name": "History"},
+            {"id": 27, "name": "Horror"},
+            {"id": 10402, "name": "Music"},
+            {"id": 9648, "name": "Mystery"},
+            {"id": 10749, "name": "Romance"},
+            {"id": 878, "name": "Science Fiction"},
+            {"id": 10752, "name": "War"}
+        ]
+        # Extract user recommendations (ignoring the first element, which is user_id)
+        user_recommendations = recommendations[0][1:]
+
+        # Create a new dictionary with "id" and corresponding rec numbers
+        id_rec_dict = {genre["id"]: user_recommendations[i] for i, genre in enumerate(genre_list)}
+
+        # Get the top 5 IDs with their corresponding values, sorted by values in descending order
+        top_5_ids = sorted(id_rec_dict.items(), key=lambda item: item[1], reverse=True)[:5]
+
+        # Extract just the IDs from the sorted list
+        top_5_ids_only = [id for id, value in top_5_ids]
+
+        # Prepare a list to hold content recommendations
+        content_recommendations = []
+
+        # Map the top genre IDs to their respective genre information
+        for genre_id in top_5_ids_only:
+            # Ensure the genre_id is valid
+            genre_info = next((genre for genre in genre_list if genre["id"] == genre_id), None)
+
+            if genre_info is not None:
+                content = get_content_by_genre(genre_info['id'])
+
+                content_recommendations.append({
+                    "genre_name": genre_info['name'],
+                    "content": content
+                })
+
+
+        return jsonify(content_recommendations)
+
     app.register_blueprint(main_blueprint)
+
