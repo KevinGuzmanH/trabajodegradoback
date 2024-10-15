@@ -109,6 +109,7 @@ class IAService:
         # Configurar la conexión a PostgreSQL
         self.engine = create_engine('postgresql+psycopg2://postgres:grado122@localhost/grado')
 
+    def load_data(self):
         # Consultas SQL para obtener los datos
         self.preferences_query = """
             SELECT user_id, watch_frequence_by_week, netflix_favorite_platform, amazon_prime_favorite_platform, 
@@ -146,11 +147,6 @@ class IAService:
             FROM recommendations;
         """
 
-        # Cargar los datos al iniciar la clase
-        self.load_data()
-
-
-    def load_data(self):
         # Cargar datos
         self.preferences_df = pd.read_sql(self.preferences_query, self.engine)
         self.interactions_df = pd.read_sql(self.interactions_query, self.engine)
@@ -203,6 +199,9 @@ class IAService:
         return y
 
     def get_recommendations_for_user(self, user_id):
+
+        # Cargar los datos al iniciar la clase
+        self.load_data()
 
         # Unir las preferencias y las interacciones
         self.user_data = pd.merge(self.preferences_df, self.interactions_df, on='user_id', how='left')

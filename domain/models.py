@@ -46,6 +46,8 @@ class UserPreference(db.Model):
     like_guerra_genre = db.Column(db.Boolean)
     favorite_actor = db.Column(db.String(100))
 
+    # Relación inversa con el modelo User
+    user = db.relationship('User', backref=db.backref('user_preferences', lazy=False))
 class UserInteraction(db.Model):
     __tablename__ = 'user_interactions'
 
