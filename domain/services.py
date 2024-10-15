@@ -162,9 +162,48 @@ class IAService:
         self.recommendations_df.replace({True: 1, False: 0}, inplace=True)
         self.recommendations_df.replace({'movie': 1, 'serie': 0}, inplace=True)
 
+    def createdataframe(self):
+        import pandas as pd
+        import numpy as np
+
+        # Supongamos que tienes un DataFrame de ejemplo con X (las preferencias del usuario)
+        X = self.X
+
+        # DataFrame para y (los géneros de recomendaciones)
+        y = self.y
+
+        # Crear un mapeo entre columnas de preferencias (X) y géneros (y)
+        mapping = {
+            'like_accion_genre': 'accion',
+            'like_aventura_genre': 'aventura',
+            'like_animacion_genre': 'animacion',
+            'like_comedia_genre': 'comedia',
+            'like_crimen_genre': 'crimen',
+            'like_documental_genre': 'documental',
+            'like_drama_genre': 'drama',
+            'like_familiar_genre': 'familiar',
+            'like_fantasia_genre': 'fantasia',
+            'like_historia_genre': 'historia',
+            'like_horror_genre': 'horror',
+            'like_musica_genre': 'musica',
+            'like_misterio_genre': 'misterio',
+            'like_romance_genre': 'romance',
+            'like_ciencia_ficcion_genre': 'ciencia',
+            'like_guerra_genre': 'guerra'
+        }
+
+        # Iterar sobre el mapeo y ajustar los valores en y
+        for preference, genre in mapping.items():
+            # Si la preferencia en X es 1 (alta), aumentar el valor correspondiente en y
+            if X[preference].iloc[0] == 1:
+                y[genre].iloc[0] = np.random.randint(50, 100)  # Valores altos para géneros favoritos
+            else:
+                y[genre].iloc[0] = np.random.randint(0, 50)  # Valores más bajos para géneros menos favoritos
+
+        return y
 
     def get_recommendations_for_user(self, user_id):
-        user_id = 3
+
         # Unir las preferencias y las interacciones
         self.user_data = pd.merge(self.preferences_df, self.interactions_df, on='user_id', how='left')
         self.user_data = self.user_data[self.user_data['user_id'] == user_id]
@@ -197,10 +236,12 @@ class IAService:
         self.clf = DecisionTreeClassifier()
         self.clf.fit(self.X, self.y)
 
+        fited = self.createdataframe()
         # Usar el modelo para predecir la probabilidad de que le guste cierto contenido
         predicted_content = self.clf.predict(self.X)
 
         predicted_content = predicted_content.tolist()
-
+        fited = fited.values.tolist()
         # Devolver la respuesta en formato JSON
-        return predicted_content
+        return fited
+

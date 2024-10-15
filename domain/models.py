@@ -45,3 +45,40 @@ class UserPreference(db.Model):
     like_ciencia_ficcion_genre = db.Column(db.Boolean)
     like_guerra_genre = db.Column(db.Boolean)
     favorite_actor = db.Column(db.String(100))
+
+class UserInteraction(db.Model):
+    __tablename__ = 'user_interactions'
+
+    interaction_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    content_id = db.Column(db.Integer, nullable=False)
+    content_type = db.Column(db.String(50), nullable=False)
+    liked = db.Column(db.Boolean, default=False)
+    interaction_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref=db.backref('interactions', lazy=True))
+
+class Recommendation(db.Model):
+    __tablename__ = 'recommendations'
+
+    recommendation_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    accion = db.Column(db.Integer, nullable=False)
+    aventura = db.Column(db.Integer, nullable=False)
+    animacion = db.Column(db.Integer, nullable=False)
+    comedia = db.Column(db.Integer, nullable=False)
+    crimen = db.Column(db.Integer, nullable=False)
+    documental = db.Column(db.Integer, nullable=False)
+    drama = db.Column(db.Integer, nullable=False)
+    familiar = db.Column(db.Integer, nullable=False)
+    fantasia = db.Column(db.Integer, nullable=False)
+    historia = db.Column(db.Integer, nullable=False)
+    horror = db.Column(db.Integer, nullable=False)
+    musica = db.Column(db.Integer, nullable=False)
+    misterio = db.Column(db.Integer, nullable=False)
+    romance = db.Column(db.Integer, nullable=False)
+    ciencia = db.Column(db.Integer, nullable=False)
+    guerra = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref=db.backref('recommendations', lazy=True))

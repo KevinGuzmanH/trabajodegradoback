@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 
-from domain.models import UserPreference,User,db
+from domain.models import UserPreference,User,db,UserInteraction,Recommendation
 from domain.services import TMDbService
 import json
 
@@ -147,6 +147,41 @@ def configure_routes(app):
         db.session.add(new_preferences)
         db.session.commit()
 
+        # Create a new user interaction
+        new_interaction = UserInteraction(
+            user_id=new_user.user_id,
+            content_id=1,  # Assuming you want to set this to 1 as per your requirement
+            content_type="movie",  # Set the content type to 'movie'
+            liked=False  # Default value for liked
+        )
+
+        db.session.add(new_interaction)
+        db.session.commit()
+
+        # Crear un nuevo registro en la tabla recommendations con los valores especificados
+        new_recommendation = Recommendation(
+            user_id=new_user.user_id,
+            accion=11,
+            aventura=11,
+            animacion=22,
+            comedia=12,
+            crimen=13,
+            documental=12,
+            drama=11,
+            familiar=15,
+            fantasia=22,
+            historia=55,
+            horror=66,
+            musica=23,
+            misterio=51,
+            romance=55,
+            ciencia=66,
+            guerra=75
+        )
+
+        db.session.add(new_recommendation)
+        db.session.commit()
+
         return jsonify({"message": "User registered successfully!"}), 201
 
     @main_blueprint.route('/login', methods=['POST'])
@@ -238,8 +273,73 @@ def configure_routes(app):
                     "content": content
                 })
 
-
         return jsonify(content_recommendations)
+
+    @main_blueprint.route('/update_user_preferences', methods=['POST'])
+    def update_user_preferences():
+        data = request.json
+        user_id = data.get('user_id')
+        genres = data.get('genres', [])
+
+        # Obtener las preferencias del usuario
+        user_preferences = UserPreference.query.filter_by(user_id=user_id).first()
+
+        if not user_preferences:
+            return jsonify({"message": "No se encontraron preferencias para este usuario"}), 404
+
+        # Actualizar las preferencias de género según los géneros recibidos
+        if "accion" in genres:
+            user_preferences.like_accion_genre = True
+            print("accion in")
+        if "aventura" in genres:
+            user_preferences.like_aventura_genre = True
+            print("aventura in")
+        if "animacion" in genres:
+            user_preferences.like_animacion_genre = True
+            print("animacion in")
+        if "comedia" in genres:
+            user_preferences.like_comedia_genre = True
+            print("comedia in")
+        if "crimen" in genres:
+            user_preferences.like_crimen_genre = True
+            print("crimen in")
+        if "documental" in genres:
+            user_preferences.like_documental_genre = True
+            print("documental in")
+        if "drama" in genres:
+            user_preferences.like_drama_genre = True
+            print("drama in")
+        if "familiar" in genres:
+            user_preferences.like_familiar_genre = True
+            print("familiar in")
+        if "fantasia" in genres:
+            user_preferences.like_fantasia_genre = True
+            print("fantasia in")
+        if "historia" in genres:
+            user_preferences.like_historia_genre = True
+            print("historia in")
+        if "horror" in genres:
+            user_preferences.like_horror_genre = True
+            print("horror in")
+        if "musica" in genres:
+            user_preferences.like_musica_genre = True
+            print("musica in")
+        if "misterio" in genres:
+            user_preferences.like_misterio_genre = True
+            print("misterio in")
+        if "romance" in genres:
+            user_preferences.like_romance_genre = True
+            print("romance in")
+        if "ciencia_ficcion" in genres:
+            user_preferences.like_ciencia_ficcion_genre = True
+            print("ciencia_ficcion in")
+        if "guerra" in genres:
+            user_preferences.like_guerra_genre = True
+            print("guerra in")
+
+        db.session.commit()
+
+        return jsonify({"message": "Preferencias de usuario actualizadas exitosamente"}), 200
 
     app.register_blueprint(main_blueprint)
 
