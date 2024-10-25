@@ -48,37 +48,37 @@ class UserPreference(db.Model):
 
     def update_genre_count(self, genre, increment=True):
         if genre == "Acción":
-            self.like_accion_genre += 1 if increment else -1
+            self.like_accion_genre = max(0, self.like_accion_genre + (1 if increment else -1))
         elif genre == "Aventura":
-            self.like_aventura_genre += 1 if increment else -1
+            self.like_aventura_genre = max(0, self.like_aventura_genre + (1 if increment else -1))
         elif genre == "Animacion":
-            self.like_animacion_genre += 1 if increment else -1
+            self.like_animacion_genre = max(0, self.like_animacion_genre + (1 if increment else -1))
         elif genre == "Comedia":
-            self.like_comedia_genre += 1 if increment else -1
+            self.like_comedia_genre = max(0, self.like_comedia_genre + (1 if increment else -1))
         elif genre == "Crimen":
-            self.like_crimen_genre += 1 if increment else -1
+            self.like_crimen_genre = max(0, self.like_crimen_genre + (1 if increment else -1))
         elif genre == "Documental":
-            self.like_documental_genre += 1 if increment else -1
+            self.like_documental_genre = max(0, self.like_documental_genre + (1 if increment else -1))
         elif genre == "Drama":
-            self.like_drama_genre += 1 if increment else -1
+            self.like_drama_genre = max(0, self.like_drama_genre + (1 if increment else -1))
         elif genre == "Familiar":
-            self.like_familiar_genre += 1 if increment else -1
+            self.like_familiar_genre = max(0, self.like_familiar_genre + (1 if increment else -1))
         elif genre == "Fantasia":
-            self.like_fantasia_genre += 1 if increment else -1
+            self.like_fantasia_genre = max(0, self.like_fantasia_genre + (1 if increment else -1))
         elif genre == "Historia":
-            self.like_historia_genre += 1 if increment else -1
+            self.like_historia_genre = max(0, self.like_historia_genre + (1 if increment else -1))
         elif genre in ["Terror", "Horror"]:
-            self.like_horror_genre += 1 if increment else -1
+            self.like_horror_genre = max(0, self.like_horror_genre + (1 if increment else -1))
         elif genre == "Musica":
-            self.like_musica_genre += 1 if increment else -1
+            self.like_musica_genre = max(0, self.like_musica_genre + (1 if increment else -1))
         elif genre == "Misterio":
-            self.like_misterio_genre += 1 if increment else -1
+            self.like_misterio_genre = max(0, self.like_misterio_genre + (1 if increment else -1))
         elif genre == "Romance":
-            self.like_romance_genre += 1 if increment else -1
+            self.like_romance_genre = max(0, self.like_romance_genre + (1 if increment else -1))
         elif genre == "Ciencia ficción":
-            self.like_ciencia_ficcion_genre += 1 if increment else -1
+            self.like_ciencia_ficcion_genre = max(0, self.like_ciencia_ficcion_genre + (1 if increment else -1))
         elif genre == "Guerra":
-            self.like_guerra_genre += 1 if increment else -1
+            self.like_guerra_genre = max(0, self.like_guerra_genre + (1 if increment else -1))
 
     # Relación inversa con el modelo User
     user = db.relationship('User', backref=db.backref('user_preferences', lazy=False))
