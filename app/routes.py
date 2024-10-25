@@ -224,7 +224,8 @@ def configure_routes(app):
         genre = data.get('genre')
         content_id = data.get('content_id')
         action = data.get('action')
-
+        print('UserID ' + user_id + ' ContentID ' + content_id + ' Action ' + action)
+        
         # Verificar si el usuario existe
         user_preferences = UserPreference.query.filter_by(user_id=user_id).first()
         if not user_preferences:
@@ -233,35 +234,64 @@ def configure_routes(app):
         # Verificar si ya existe una interacción del usuario con este contenido
         existing_interaction = UserInteraction.query.filter_by(user_id=user_id, content_id=content_id).first()
 
-        if existing_interaction:
-            # Si el nuevo `action` es diferente al anterior, actualizamos
-            if existing_interaction.liked and action == "dislike":
-                # Cambiar a dislike
-                existing_interaction.liked = False
-            elif not existing_interaction.liked and action == "like":
-                # Cambiar a like
-                existing_interaction.liked = True
-        else:
-            # Crear una nueva interacción del usuario con el contenido
-            new_interaction = UserInteraction(
-                user_id=user_id,
-                content_id=content_id,
-                content_type="movie",
-                liked=True if action == "like" else False,
-                interaction_date=datetime.utcnow()
-            )
+        if action == "dislike":
+            if existing_interaction:
+                if existing_interaction.liked:  
+                    # Si existe un "like", lo eliminamos
+                    db.session.delete(existing_interaction)
+                    db.session.commit()  # Confirmar eliminación
+                    return jsonify({"message": "Interacción 'like' eliminada, no se crea un 'dislike'"}), 200
+                
+                # Si ya existe un "dislike", lo eliminamos
+                db.session.delete(existing_interaction)
+                db.session.commit()  # Confirmar eliminación
+                return jsonify({"message": "Interacción 'dislike' eliminada"}), 200
+            else:
+                # Crear una nueva interacción "dislike"
+                new_interaction = UserInteraction(
+                    user_id=user_id,
+                    content_id=content_id,
+                    content_type="movie",
+                    liked=False,
+                    interaction_date=datetime.utcnow()
+                )
+                db.session.add(new_interaction)
+            
+            # Actualizar la preferencia del usuario
+            user_preferences.update_genre_count(genre, increment=False)
 
-            # Agregar la nueva interacción a la sesión
-            db.session.add(new_interaction)
+        elif action == "like":
+            if existing_interaction:
+                if not existing_interaction.liked:
+                    # Si existe un "dislike", lo eliminamos
+                    db.session.delete(existing_interaction)
+                    db.session.commit()  # Confirmar eliminación
+                    return jsonify({"message": "Interacción 'dislike' eliminada, no se crea un 'like'"}), 200
+                
+                # Si ya existe un "like", lo eliminamos
+                db.session.delete(existing_interaction)
+                db.session.commit()  # Confirmar eliminación
+                return jsonify({"message": "Interacción 'like' eliminada"}), 200
+            else:
+                # Crear una nueva interacción "like"
+                new_interaction = UserInteraction(
+                    user_id=user_id,
+                    content_id=content_id,
+                    content_type="movie",
+                    liked=True,
+                    interaction_date=datetime.utcnow()
+                )
+                db.session.add(new_interaction)
 
             # Actualizar la preferencia del usuario
-            user_preferences.update_genre_count(genre, increment=True if action == "like" else False)
+            user_preferences.update_genre_count(genre, increment=True)
 
         # Guardar los cambios en la base de datos
         db.session.commit()
 
         return jsonify(
-            {"message": f"Se ha {'incrementado' if action == 'like' else 'decrementado'} el género {genre} en 1"}), 200
+            {"message": f"Se ha {'incrementado' if action == 'like' else 'decrementado'} el género {genre} en 1"}
+        ), 200
 
     @main_blueprint.route('/check-like', methods=['POST'])
     def check_like():
@@ -355,65 +385,20 @@ def configure_routes(app):
         user_id = data.get('user_id')
         genres = data.get('genres', [])
 
-        # Obtener las preferencias del usuario
+        # Obtain user preferences
         user_preferences = UserPreference.query.filter_by(user_id=user_id).first()
 
         if not user_preferences:
-            return jsonify({"message": "No se encontraron preferencias para este usuario"}), 404
+            return jsonify({"message": "No preferences found for this user"}), 404
 
-        # Actualizar las preferencias de género según los géneros recibidos
-        if "accion" in genres:
-            user_preferences.like_accion_genre = True
-            print("accion in")
-        if "aventura" in genres:
-            user_preferences.like_aventura_genre = True
-            print("aventura in")
-        if "animacion" in genres:
-            user_preferences.like_animacion_genre = True
-            print("animacion in")
-        if "comedia" in genres:
-            user_preferences.like_comedia_genre = True
-            print("comedia in")
-        if "crimen" in genres:
-            user_preferences.like_crimen_genre = True
-            print("crimen in")
-        if "documental" in genres:
-            user_preferences.like_documental_genre = True
-            print("documental in")
-        if "drama" in genres:
-            user_preferences.like_drama_genre = True
-            print("drama in")
-        if "familiar" in genres:
-            user_preferences.like_familiar_genre = True
-            print("familiar in")
-        if "fantasia" in genres:
-            user_preferences.like_fantasia_genre = True
-            print("fantasia in")
-        if "historia" in genres:
-            user_preferences.like_historia_genre = True
-            print("historia in")
-        if "horror" in genres:
-            user_preferences.like_horror_genre = True
-            print("horror in")
-        if "musica" in genres:
-            user_preferences.like_musica_genre = True
-            print("musica in")
-        if "misterio" in genres:
-            user_preferences.like_misterio_genre = True
-            print("misterio in")
-        if "romance" in genres:
-            user_preferences.like_romance_genre = True
-            print("romance in")
-        if "ciencia_ficcion" in genres:
-            user_preferences.like_ciencia_ficcion_genre = True
-            print("ciencia_ficcion in")
-        if "guerra" in genres:
-            user_preferences.like_guerra_genre = True
-            print("guerra in")
+        # Update genre preferences according to the received genres
+        for genre in genres:
+            # Update the genre counts, incrementing if present in the list
+            user_preferences.update_genre_count(genre, increment=True)
 
         db.session.commit()
 
-        return jsonify({"message": "Preferencias de usuario actualizadas exitosamente"}), 200
+        return jsonify({"message": "User preferences updated successfully"}), 200
 
     CORS(app)
     app.register_blueprint(main_blueprint)
