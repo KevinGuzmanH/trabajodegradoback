@@ -89,6 +89,16 @@ class TMDbService:
         response = requests.get(url)
         return response.json() if response.status_code == 200 else None
 
+    def get_top_rated(self, media_type, page=1, language='es-ES'):
+        url = f"{self.BASE_URL}/{media_type}/top_rated"
+        params = {
+            'api_key': self.API_KEY,
+            'language': language,
+            'page': page
+        }
+        response = requests.get(url, params=params)
+        return response.json() if response.status_code == 200 else None
+        
     def get_content_by_tipo(self, tipo):
         page = 1
         if tipo.lower() == 'pelicula':
@@ -104,6 +114,7 @@ class TMDbService:
         response = requests.get(url, params=params)
         return response.json() if response.status_code == 200 else None
 
+   
 class IAService:
     def __init__(self):
         # Configurar la conexión a PostgreSQL

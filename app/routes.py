@@ -392,6 +392,17 @@ def configure_routes(app):
         
         return jsonify(liked_content_data), 200
 
+    @main_blueprint.route('/<media_type>/top_rated', methods=['GET'])
+    def get_top_rated(media_type):
+        page = request.args.get('page', 1)
+        language = request.args.get('language', 'es-ES')
+        top_rated = service.get_top_rated(media_type, page=page, language=language)
+        
+        if top_rated:
+            return jsonify(top_rated), 200
+        else:
+            return jsonify({'error': 'No se encontraron resultados'}), 404
+        
     CORS(app)
     app.register_blueprint(main_blueprint)
 
