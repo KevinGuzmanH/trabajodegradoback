@@ -24,30 +24,65 @@ class UserPreference(db.Model):
     preference_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     watch_frequence_by_week = db.Column(db.Integer)
-    netflix_favorite_platform = db.Column(db.Boolean)
-    amazon_prime_favorite_platform = db.Column(db.Boolean)
-    disney_prime_favorite_platform = db.Column(db.Boolean)
-    hbo_prime_favorite_platform = db.Column(db.Boolean)
-    like_accion_genre = db.Column(db.Boolean)
-    like_aventura_genre = db.Column(db.Boolean)
-    like_animacion_genre = db.Column(db.Boolean)
-    like_comedia_genre = db.Column(db.Boolean)
-    like_crimen_genre = db.Column(db.Boolean)
-    like_documental_genre = db.Column(db.Boolean)
-    like_drama_genre = db.Column(db.Boolean)
-    like_familiar_genre = db.Column(db.Boolean)
-    like_fantasia_genre = db.Column(db.Boolean)
-    like_historia_genre = db.Column(db.Boolean)
-    like_horror_genre = db.Column(db.Boolean)
-    like_musica_genre = db.Column(db.Boolean)
-    like_misterio_genre = db.Column(db.Boolean)
-    like_romance_genre = db.Column(db.Boolean)
-    like_ciencia_ficcion_genre = db.Column(db.Boolean)
-    like_guerra_genre = db.Column(db.Boolean)
+    netflix_favorite_platform = db.Column(db.Integer)
+    amazon_prime_favorite_platform = db.Column(db.Integer)
+    disney_prime_favorite_platform = db.Column(db.Integer)
+    hbo_prime_favorite_platform = db.Column(db.Integer)
+    like_accion_genre = db.Column(db.Integer)
+    like_aventura_genre = db.Column(db.Integer)
+    like_animacion_genre = db.Column(db.Integer)
+    like_comedia_genre = db.Column(db.Integer)
+    like_crimen_genre = db.Column(db.Integer)
+    like_documental_genre = db.Column(db.Integer)
+    like_drama_genre = db.Column(db.Integer)
+    like_familiar_genre = db.Column(db.Integer)
+    like_fantasia_genre = db.Column(db.Integer)
+    like_historia_genre = db.Column(db.Integer)
+    like_horror_genre = db.Column(db.Integer)
+    like_musica_genre = db.Column(db.Integer)
+    like_misterio_genre = db.Column(db.Integer)
+    like_romance_genre = db.Column(db.Integer)
+    like_ciencia_ficcion_genre = db.Column(db.Integer)
+    like_guerra_genre = db.Column(db.Integer)
     favorite_actor = db.Column(db.String(100))
+
+    def update_genre_count(self, genre, increment=True):
+        if genre == "Acción":
+            self.like_accion_genre += 1 if increment else -1
+        elif genre == "Aventura":
+            self.like_aventura_genre += 1 if increment else -1
+        elif genre == "Animacion":
+            self.like_animacion_genre += 1 if increment else -1
+        elif genre == "Comedia":
+            self.like_comedia_genre += 1 if increment else -1
+        elif genre == "Crimen":
+            self.like_crimen_genre += 1 if increment else -1
+        elif genre == "Documental":
+            self.like_documental_genre += 1 if increment else -1
+        elif genre == "Drama":
+            self.like_drama_genre += 1 if increment else -1
+        elif genre == "Familiar":
+            self.like_familiar_genre += 1 if increment else -1
+        elif genre == "Fantasia":
+            self.like_fantasia_genre += 1 if increment else -1
+        elif genre == "Historia":
+            self.like_historia_genre += 1 if increment else -1
+        elif genre in ["Terror", "Horror"]:
+            self.like_horror_genre += 1 if increment else -1
+        elif genre == "Musica":
+            self.like_musica_genre += 1 if increment else -1
+        elif genre == "Misterio":
+            self.like_misterio_genre += 1 if increment else -1
+        elif genre == "Romance":
+            self.like_romance_genre += 1 if increment else -1
+        elif genre == "Ciencia ficción":
+            self.like_ciencia_ficcion_genre += 1 if increment else -1
+        elif genre == "Guerra":
+            self.like_guerra_genre += 1 if increment else -1
 
     # Relación inversa con el modelo User
     user = db.relationship('User', backref=db.backref('user_preferences', lazy=False))
+
 class UserInteraction(db.Model):
     __tablename__ = 'user_interactions'
 

@@ -162,7 +162,6 @@ class IAService:
         import pandas as pd
         import numpy as np
 
-        # Supongamos que tienes un DataFrame de ejemplo con X (las preferencias del usuario)
         X = self.X
 
         # DataFrame para y (los géneros de recomendaciones)

@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from flask import Blueprint, jsonify, request
+from flask_cors import CORS, cross_origin
 
 from domain.models import UserPreference,User,db,UserInteraction,Recommendation
 from domain.services import TMDbService
@@ -96,6 +99,11 @@ def configure_routes(app):
         country = data.get('country')
 
         # Check if the user already exists
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return jsonify({"message": "Usuario Ya Existe"}), 400
+
+        # Check if the user already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             return jsonify({"message": "Correo ya utilizado"}), 400
@@ -120,27 +128,27 @@ def configure_routes(app):
             user_id=new_user.user_id,
             watch_frequence_by_week=preferences["frecuencia_visualizacion"],
             # Plataformas favoritas
-            netflix_favorite_platform="netflix" in preferences["plataformas_favoritas"],
-            amazon_prime_favorite_platform="amazon" in preferences["plataformas_favoritas"],
-            disney_prime_favorite_platform="disney" in preferences["plataformas_favoritas"],
-            hbo_prime_favorite_platform="HBO" in preferences["plataformas_favoritas"],
+            netflix_favorite_platform= 1 if "netflix" in preferences["plataformas_favoritas"] else 0,
+            amazon_prime_favorite_platform= 1 if "amazon" in preferences["plataformas_favoritas"] else 0,
+            disney_prime_favorite_platform= 1 if "disney" in preferences["plataformas_favoritas"] else 0,
+            hbo_prime_favorite_platform= 1 if "HBO" in preferences["plataformas_favoritas"] else 0,
             # Géneros favoritos
-            like_accion_genre="accion" in preferences["generos_favoritos"],
-            like_aventura_genre="aventura" in preferences["generos_favoritos"],
-            like_animacion_genre="animacion" in preferences["generos_favoritos"],
-            like_comedia_genre="comedia" in preferences["generos_favoritos"],
-            like_crimen_genre="crimen" in preferences["generos_favoritos"],
-            like_documental_genre="documental" in preferences["generos_favoritos"],
-            like_drama_genre="drama" in preferences["generos_favoritos"],
-            like_familiar_genre="familiar" in preferences["generos_favoritos"],
-            like_fantasia_genre="fantasia" in preferences["generos_favoritos"],
-            like_historia_genre="historia" in preferences["generos_favoritos"],
-            like_horror_genre="horror" in preferences["generos_favoritos"],
-            like_musica_genre="musica" in preferences["generos_favoritos"],
-            like_misterio_genre="misterio" in preferences["generos_favoritos"],
-            like_romance_genre="romance" in preferences["generos_favoritos"],
-            like_ciencia_ficcion_genre="ciencia_ficcion" in preferences["generos_favoritos"],
-            like_guerra_genre="guerra" in preferences["generos_favoritos"],
+            like_accion_genre= 1 if "accion" in preferences["generos_favoritos"] else 0,
+            like_aventura_genre= 1 if "aventura" in preferences["generos_favoritos"] else 0,
+            like_animacion_genre= 1 if "animacion" in preferences["generos_favoritos"] else 0,
+            like_comedia_genre= 1 if "comedia" in preferences["generos_favoritos"] else 0,
+            like_crimen_genre= 1 if "crimen" in preferences["generos_favoritos"] else 0,
+            like_documental_genre= 1 if "documental" in preferences["generos_favoritos"] else 0,
+            like_drama_genre= 1 if "drama" in preferences["generos_favoritos"] else 0,
+            like_familiar_genre= 1 if "familiar" in preferences["generos_favoritos"] else 0,
+            like_fantasia_genre= 1 if "fantasia" in preferences["generos_favoritos"] else 0,
+            like_historia_genre= 1 if "historia" in preferences["generos_favoritos"] else 0,
+            like_horror_genre= 1 if "horror" in preferences["generos_favoritos"] else 0,
+            like_musica_genre= 1 if "musica" in preferences["generos_favoritos"] else 0,
+            like_misterio_genre= 1 if "misterio" in preferences["generos_favoritos"] else 0,
+            like_romance_genre= 1 if "romance" in preferences["generos_favoritos"] else 0,
+            like_ciencia_ficcion_genre= 1 if "ciencia_ficcion" in preferences["generos_favoritos"] else 0,
+            like_guerra_genre= 1 if "guerra" in preferences["generos_favoritos"] else 0,
             # Actor favorito
             favorite_actor=preferences["actor_favorito"]
         )
@@ -208,6 +216,72 @@ def configure_routes(app):
                 "user_id": user.user_id
             }
         }), 200
+
+    @main_blueprint.route('/like', methods=['POST'])
+    def like_genre():
+        data = request.json
+        user_id = data.get('user_id')
+        genre = data.get('genre')
+        content_id = data.get('content_id')
+        action = data.get('action')
+
+        # Verificar si el usuario existe
+        user_preferences = UserPreference.query.filter_by(user_id=user_id).first()
+        if not user_preferences:
+            return jsonify({"message": "Usuario no encontrado"}), 404
+
+        # Verificar si ya existe una interacción del usuario con este contenido
+        existing_interaction = UserInteraction.query.filter_by(user_id=user_id, content_id=content_id).first()
+
+        if existing_interaction:
+            # Si el nuevo `action` es diferente al anterior, actualizamos
+            if existing_interaction.liked and action == "dislike":
+                # Cambiar a dislike
+                existing_interaction.liked = False
+            elif not existing_interaction.liked and action == "like":
+                # Cambiar a like
+                existing_interaction.liked = True
+        else:
+            # Crear una nueva interacción del usuario con el contenido
+            new_interaction = UserInteraction(
+                user_id=user_id,
+                content_id=content_id,
+                content_type="movie",
+                liked=True if action == "like" else False,
+                interaction_date=datetime.utcnow()
+            )
+
+            # Agregar la nueva interacción a la sesión
+            db.session.add(new_interaction)
+
+            # Actualizar la preferencia del usuario
+            user_preferences.update_genre_count(genre, increment=True if action == "like" else False)
+
+        # Guardar los cambios en la base de datos
+        db.session.commit()
+
+        return jsonify(
+            {"message": f"Se ha {'incrementado' if action == 'like' else 'decrementado'} el género {genre} en 1"}), 200
+
+    @main_blueprint.route('/check-like', methods=['POST'])
+    def check_like():
+        data = request.json
+        user_id = data.get('user_id')
+        content_id = data.get('content_id')
+
+        if not user_id or not content_id:
+            return jsonify({"message": "user_id y content_id son necesarios"}), 400
+
+        liked = UserInteraction.query.filter_by(user_id=user_id, content_id=content_id, liked=True).first()
+        disliked = UserInteraction.query.filter_by(user_id=user_id, content_id=content_id, liked=False).first()
+
+        if liked is None and disliked is None:
+            return jsonify({"message": "sin interacción"}), 404
+
+        if liked:
+            return jsonify({"message": "True"}), 200
+        if disliked:
+            return jsonify({"message": "False"}), 200
 
     @app.route('/recommendations/<int:user_id>', methods=['GET'])
     def recommend(user_id):
@@ -341,5 +415,6 @@ def configure_routes(app):
 
         return jsonify({"message": "Preferencias de usuario actualizadas exitosamente"}), 200
 
+    CORS(app)
     app.register_blueprint(main_blueprint)
 
