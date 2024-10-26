@@ -47,37 +47,37 @@ class UserPreference(db.Model):
     favorite_actor = db.Column(db.String(100))
 
     def update_genre_count(self, genre, increment=True):
-        if genre == "Acción":
+        if genre in ["Acción", "acción"]:
             self.like_accion_genre = max(0, self.like_accion_genre + (1 if increment else -1))
-        elif genre == "Aventura":
+        elif genre in ["Aventura", "aventura"]:
             self.like_aventura_genre = max(0, self.like_aventura_genre + (1 if increment else -1))
-        elif genre == "Animacion":
+        elif genre in ["Animacion", "animación"]:
             self.like_animacion_genre = max(0, self.like_animacion_genre + (1 if increment else -1))
-        elif genre == "Comedia":
+        elif genre in ["Comedia", "comedia"]:
             self.like_comedia_genre = max(0, self.like_comedia_genre + (1 if increment else -1))
-        elif genre == "Crimen":
+        elif genre in ["Crimen", "crimen"]:
             self.like_crimen_genre = max(0, self.like_crimen_genre + (1 if increment else -1))
-        elif genre == "Documental":
+        elif genre in ["Documental", "documental"]:
             self.like_documental_genre = max(0, self.like_documental_genre + (1 if increment else -1))
-        elif genre == "Drama":
+        elif genre in ["Drama", "drama"]:
             self.like_drama_genre = max(0, self.like_drama_genre + (1 if increment else -1))
-        elif genre == "Familiar":
+        elif genre in ["Familiar", "familiar"]:
             self.like_familiar_genre = max(0, self.like_familiar_genre + (1 if increment else -1))
-        elif genre == "Fantasia":
+        elif genre in ["Fantasia", "fantasia"]:
             self.like_fantasia_genre = max(0, self.like_fantasia_genre + (1 if increment else -1))
-        elif genre == "Historia":
+        elif genre in ["Historia", "historia"]:
             self.like_historia_genre = max(0, self.like_historia_genre + (1 if increment else -1))
-        elif genre in ["Terror", "Horror"]:
+        elif genre in ["Terror","terror", "Horror","horror"]:
             self.like_horror_genre = max(0, self.like_horror_genre + (1 if increment else -1))
-        elif genre == "Musica":
+        elif genre in ["Musica", "musica"]:
             self.like_musica_genre = max(0, self.like_musica_genre + (1 if increment else -1))
-        elif genre == "Misterio":
+        elif genre in ["Misterio", "misterio"]:
             self.like_misterio_genre = max(0, self.like_misterio_genre + (1 if increment else -1))
-        elif genre == "Romance":
+        elif genre in ["Romance", "romance"]:
             self.like_romance_genre = max(0, self.like_romance_genre + (1 if increment else -1))
-        elif genre == "Ciencia ficción":
+        elif genre in ["Ciencia ficción", "ciencia ficción"]:
             self.like_ciencia_ficcion_genre = max(0, self.like_ciencia_ficcion_genre + (1 if increment else -1))
-        elif genre == "Guerra":
+        elif genre in ["Guerra", "guerra"]:
             self.like_guerra_genre = max(0, self.like_guerra_genre + (1 if increment else -1))
 
     # Relación inversa con el modelo User
