@@ -4,3 +4,4 @@ requests==2.32.3
 pandas==2.2.2
 SQLAlchemy==2.0.35
 scikit-learn==1.5.2
+poetry==1.8.4
