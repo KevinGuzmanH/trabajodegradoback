@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c29dfbb-60af-4773-a9f9-ad617b585484" name="Changes" comment="">
+    <list default="true" id="4c29dfbb-60af-4773-a9f9-ad617b585484" name="Changes" comment="organizado generos minuscula mayuscula">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/services.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,8 +104,81 @@
       <workItem from="1727802439882" duration="2410000" />
       <workItem from="1727893352283" duration="3622000" />
       <workItem from="1728580861548" duration="8134000" />
-      <workItem from="1728690514861" duration="17829000" />
+      <workItem from="1728690514861" duration="18417000" />
+      <workItem from="1728784870987" duration="3284000" />
+      <workItem from="1728940314099" duration="19036000" />
+      <workItem from="1729012085008" duration="1303000" />
+      <workItem from="1729031449145" duration="1279000" />
+      <workItem from="1729635259151" duration="1815000" />
+      <workItem from="1729707131352" duration="1446000" />
+      <workItem from="1729779364544" duration="11224000" />
+      <workItem from="1729806731127" duration="7875000" />
+      <workItem from="1729827669456" duration="118000" />
+      <workItem from="1729862753391" duration="32000" />
+      <workItem from="1729878766039" duration="35000" />
+      <workItem from="1729880116947" duration="528000" />
+      <workItem from="1729889409162" duration="399000" />
+      <workItem from="1729893909749" duration="134000" />
+      <workItem from="1729981678252" duration="73000" />
+      <workItem from="1729984122251" duration="548000" />
     </task>
+    <task id="LOCAL-00001" summary="lista ia :&amp;">
+      <option name="closed" value="true" />
+      <created>1728968010283</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728968010283</updated>
+    </task>
+    <task id="LOCAL-00002" summary="lista ia :&amp;">
+      <option name="closed" value="true" />
+      <created>1728969551730</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728969551730</updated>
+    </task>
+    <task id="LOCAL-00003" summary="likes add">
+      <option name="closed" value="true" />
+      <created>1729827758722</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729827758722</updated>
+    </task>
+    <task id="LOCAL-00004" summary="likes add">
+      <option name="closed" value="true" />
+      <created>1729880147135</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1729880147135</updated>
+    </task>
+    <task id="LOCAL-00005" summary="favoritos add">
+      <option name="closed" value="true" />
+      <created>1729889454674</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729889454752</updated>
+    </task>
+    <task id="LOCAL-00006" summary="organizado home">
+      <option name="closed" value="true" />
+      <created>1729893969140</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729893969140</updated>
+    </task>
+    <task id="LOCAL-00007" summary="organizado generos minuscula mayuscula">
+      <option name="closed" value="true" />
+      <created>1729984150433</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729984150433</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,60 +189,65 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="lista ia :&amp;" />
+    <MESSAGE value="likes add" />
+    <MESSAGE value="favoritos add" />
+    <MESSAGE value="organizado home" />
+    <MESSAGE value="organizado generos minuscula mayuscula" />
+    <option name="LAST_COMMIT_MESSAGE" value="organizado generos minuscula mayuscula" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/domain/services.py</url>
-          <line>168</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/routes.py</url>
-          <line>182</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/domain/services.py</url>
-          <line>192</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/domain/services.py</url>
-          <line>189</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/domain/services.py</url>
-          <line>200</line>
+          <line>249</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/routes.py</url>
-          <line>186</line>
-          <option name="timeStamp" value="14" />
+          <url>file://$PROJECT_DIR$/domain/services.py</url>
+          <line>254</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/domain/services.py</url>
+          <line>245</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/routes.py</url>
-          <line>225</line>
-          <option name="timeStamp" value="17" />
+          <line>369</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/routes.py</url>
-          <line>241</line>
-          <option name="timeStamp" value="18" />
+          <line>126</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TrabajodeGradoBack$Flask.coverage" NAME="Flask Coverage Results" MODIFIED="1728712263743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/TrabajodeGradoBack$Flask.coverage" NAME="Flask Coverage Results" MODIFIED="1729889802594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/TrabajodeGradoBack$.coverage" NAME=" Coverage Results" MODIFIED="1725385001515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>
