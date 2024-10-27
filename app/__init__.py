@@ -1,6 +1,7 @@
 from flask import Flask
 
 from .routes import configure_routes
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from domain.models import db
 from domain.services import IAService
@@ -16,6 +17,7 @@ def create_app():
     db.init_app(app)
     ia_service = IAService()
 
+    CORS(app)
     print('init')
     configure_routes(app)
     if __name__ == '__main__':

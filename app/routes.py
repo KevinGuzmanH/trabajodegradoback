@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, jsonify, request
-
+from flask_cors import CORS, cross_origin
 
 from domain.models import UserPreference,User,db,UserInteraction,Recommendation
 from domain.services import TMDbService
@@ -403,6 +403,6 @@ def configure_routes(app):
         else:
             return jsonify({'error': 'No se encontraron resultados'}), 404
         
-
+    CORS(app)
     app.register_blueprint(main_blueprint)
 
