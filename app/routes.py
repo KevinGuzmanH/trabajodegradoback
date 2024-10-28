@@ -166,6 +166,27 @@ def configure_routes(app):
         db.session.add(new_interaction)
         db.session.commit()
 
+        new_notification = Notification(
+            user_id=new_user.user_id,
+            message="¡Bienvenido! Tu registro ha sido exitoso."
+        )
+        db.session.add(new_notification)
+
+        # Create the additional welcome notification
+        additional_notification = Notification(
+            user_id=new_user.user_id,
+            message="Bienvenido al sistema de recomendaciones de streaming todo en uno, personaliza tus gustos como más desees."
+        )
+        db.session.add(additional_notification)
+
+        additional_notification = Notification(
+            user_id=new_user.user_id,
+            message="Aqui veras cuales son las nuevas actualizaciones y algunas recomendaciones de la administración"
+        )
+        db.session.add(additional_notification)
+
+        db.session.commit()
+
         # Crear un nuevo registro en la tabla recommendations con los valores especificados
         new_recommendation = Recommendation(
             user_id=new_user.user_id,
