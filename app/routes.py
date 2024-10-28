@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS, cross_origin
 
-from domain.models import UserPreference,User,db,UserInteraction,Recommendation
+from domain.models import UserPreference,User,db,UserInteraction,Recommendation,Notification
 from domain.services import TMDbService
 import json
 
@@ -213,7 +213,8 @@ def configure_routes(app):
             "user": {
                 "email": user.email,
                 "username": user.username,
-                "user_id": user.user_id
+                "user_id": user.user_id,
+                "rol": user.rol
             }
         }), 200
 
@@ -370,6 +371,54 @@ def configure_routes(app):
         db.session.commit()
 
         return jsonify({"message": "User preferences updated successfully"}), 200
+
+    @main_blueprint.route('/send_notification', methods=['POST'])
+    def send_notification():
+        data = request.json
+        message = data.get('message')
+
+        if not message:
+            return jsonify({"error": "Message is required"}), 400
+
+        # Obtener todos los usuarios
+        users = User.query.all()
+
+        # Crear notificación para cada usuario
+        for user in users:
+            notification = Notification(
+                message=message,
+                user_id=user.user_id
+            )
+            db.session.add(notification)
+
+        db.session.commit()
+
+        return jsonify({"message": "Notification sent to all users"}), 200
+
+    @main_blueprint.route('/user/<int:user_id>/notifications', methods=['GET'])
+    def get_user_notifications(user_id):
+        notifications = Notification.query.filter_by(user_id=user_id).order_by(Notification.created_at.desc()).all()
+        
+        notifications_data = [{
+            "notification_id": n.notification_id,
+            "message": n.message,
+            "created_at": n.created_at,
+            "is_read": n.is_read
+        } for n in notifications]
+
+        return jsonify(notifications_data), 200
+
+    @main_blueprint.route('/notification/<int:notification_id>/mark_as_read', methods=['PATCH'])
+    def mark_notification_as_read(notification_id):
+        notification = Notification.query.get(notification_id)
+
+        if not notification:
+            return jsonify({"error": "Notification not found"}), 404
+
+        notification.is_read = True
+        db.session.commit()
+
+        return jsonify({"message": "Notification marked as read"}), 200
 
     @main_blueprint.route('/user/<int:user_id>/liked_content', methods=['GET'])
     def get_user_liked_content(user_id):

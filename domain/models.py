@@ -14,9 +14,22 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_login = db.Column(db.DateTime)
     age = db.Column(db.Integer)
+    rol = db.Column(db.String(50))
     gender = db.Column(db.String(50))
     country = db.Column(db.String(100))
 
+class Notification(db.Model):
+    __tablename__ = 'notifications'
+
+    notification_id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    is_read = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+
+    # Relación con el usuario
+    user = db.relationship('User', backref=db.backref('notifications', lazy=True))
+    
 # User Preferences model
 class UserPreference(db.Model):
     __tablename__ = 'user_preferences'
