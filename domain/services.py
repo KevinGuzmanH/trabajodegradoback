@@ -74,6 +74,15 @@ class TMDbService:
         response = requests.get(url, params=params)
         return response.json() if response.status_code == 200 else None
 
+    def get_tv(self, movie_id):
+        url = f"{self.BASE_URL}/tv/{movie_id}"
+        params = {
+            'api_key': self.API_KEY,
+            'language': 'es-ES'
+        }
+        response = requests.get(url, params=params)
+        return response.json() if response.status_code == 200 else None
+
     def get_now_playing(self, media_type, page=1):
         url = f"{self.BASE_URL}/{media_type}/now_playing"
         params = {
@@ -116,9 +125,13 @@ class TMDbService:
 
    
 class IAService:
+
     def __init__(self):
+        self.railwaydb = 'postgresql://postgres:fRiINwCHRLFUJEwFGalUXMrhvJaYZwbU@autorack.proxy.rlwy.net:17593/railway'
+        # self.localhostdb = 'postgresql://postgres:grado122@localhost/grado'
+
         # Configurar la conexión a PostgreSQL
-        self.engine = create_engine('postgresql+psycopg2://postgres:grado122@localhost/grado')
+        self.engine = create_engine(self.railwaydb)
 
     def load_data(self):
         # Consultas SQL para obtener los datos

@@ -246,15 +246,16 @@ def configure_routes(app):
         genre = data.get('genre')
         content_id = data.get('content_id')
         action = data.get('action')
+        content_type = data.get('content_type')
 
-        print('user_id '+user_id+ ' content_id '+content_id+' action '+action)
+        print('user_id '+user_id+ ' content_id '+content_id+' action '+action+' content_type '+content_type)
         # Verificar si el usuario existe
         user_preferences = UserPreference.query.filter_by(user_id=user_id).first()
         if not user_preferences:
             return jsonify({"message": "Usuario no encontrado"}), 404
 
         # Verificar si ya existe una interacción del usuario con este contenido
-        existing_interaction = UserInteraction.query.filter_by(user_id=user_id, content_id=content_id).first()
+        existing_interaction = UserInteraction.query.filter_by(user_id=user_id, content_id=content_id,content_type=content_type).first()
 
         if existing_interaction:
             # Si el nuevo `action` es diferente al anterior, actualizamos
@@ -269,7 +270,7 @@ def configure_routes(app):
             new_interaction = UserInteraction(
                 user_id=user_id,
                 content_id=content_id,
-                content_type="movie",
+                content_type=content_type,
                 liked=True if action == "like" else False,
                 interaction_date=datetime.utcnow()
             )
@@ -459,7 +460,11 @@ def configure_routes(app):
                 movie_data = tmdb_service.get_movie(interaction.content_id)
                 if movie_data:
                     liked_content_data.append(movie_data)
-        
+            else:
+                movie_data = tmdb_service.get_tv(interaction.content_id)
+                if movie_data:
+                    liked_content_data.append(movie_data)
+
         return jsonify(liked_content_data), 200
 
     @main_blueprint.route('/<media_type>/top_rated', methods=['GET'])

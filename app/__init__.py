@@ -12,7 +12,10 @@ def create_app():
     global ia_service
 
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:grado122@localhost/grado'
+    railwaydb = 'postgresql://postgres:fRiINwCHRLFUJEwFGalUXMrhvJaYZwbU@autorack.proxy.rlwy.net:17593/railway'
+    #localhostdb = 'postgresql://postgres:grado122@localhost/grado'
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = railwaydb
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     ia_service = IAService()
