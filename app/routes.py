@@ -474,10 +474,12 @@ def configure_routes(app):
                 movie_data = tmdb_service.get_movie(interaction.content_id)
                 if movie_data:
                     liked_content_data.append(movie_data)
+                    liked_content_data[0].update({"content_type":"movie"})
             else:
                 movie_data = tmdb_service.get_tv(interaction.content_id)
                 if movie_data:
                     liked_content_data.append(movie_data)
+                    liked_content_data[0].update({"content_type":"tv"})
 
         return jsonify(liked_content_data), 200
 
