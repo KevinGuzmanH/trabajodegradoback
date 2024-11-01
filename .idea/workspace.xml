@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c29dfbb-60af-4773-a9f9-ad617b585484" name="Changes" comment="despliegue8" />
+    <list default="true" id="4c29dfbb-60af-4773-a9f9-ad617b585484" name="Changes" comment="solucion favoritos">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/services.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,6 +125,10 @@
       <workItem from="1729981678252" duration="73000" />
       <workItem from="1729984122251" duration="548000" />
       <workItem from="1730000941779" duration="5131000" />
+      <workItem from="1730076777551" duration="2252000" />
+      <workItem from="1730308968388" duration="1705000" />
+      <workItem from="1730413962767" duration="867000" />
+      <workItem from="1730416100305" duration="4825000" />
     </task>
     <task id="LOCAL-00001" summary="lista ia :&amp;">
       <option name="closed" value="true" />
@@ -249,7 +258,31 @@
       <option name="project" value="LOCAL" />
       <updated>1730005339059</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="agregado notificaciones">
+      <option name="closed" value="true" />
+      <created>1730076834447</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1730076834447</updated>
+    </task>
+    <task id="LOCAL-00018" summary="agregado notificaciones de registro">
+      <option name="closed" value="true" />
+      <created>1730078124803</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1730078124803</updated>
+    </task>
+    <task id="LOCAL-00019" summary="solucion favoritos">
+      <option name="closed" value="true" />
+      <created>1730414192820</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1730414192820</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,41 +325,49 @@
     <MESSAGE value="despliegue6" />
     <MESSAGE value="despliegue7" />
     <MESSAGE value="despliegue8" />
-    <option name="LAST_COMMIT_MESSAGE" value="despliegue8" />
+    <MESSAGE value="agregado notificaciones" />
+    <MESSAGE value="agregado notificaciones de registro" />
+    <MESSAGE value="solucion favoritos" />
+    <option name="LAST_COMMIT_MESSAGE" value="solucion favoritos" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/domain/services.py</url>
-          <line>249</line>
+          <line>262</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/domain/services.py</url>
-          <line>254</line>
+          <line>267</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/domain/services.py</url>
-          <line>245</line>
+          <line>258</line>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/routes.py</url>
-          <line>369</line>
-          <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/routes.py</url>
           <line>126</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/routes.py</url>
+          <line>263</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/routes.py</url>
+          <line>243</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TrabajodeGradoBack$Flask.coverage" NAME="Flask Coverage Results" MODIFIED="1729889802594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/TrabajodeGradoBack$Flask.coverage" NAME="Flask Coverage Results" MODIFIED="1730429352607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/TrabajodeGradoBack$.coverage" NAME=" Coverage Results" MODIFIED="1725385001515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>

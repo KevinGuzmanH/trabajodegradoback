@@ -127,11 +127,11 @@ class TMDbService:
 class IAService:
 
     def __init__(self):
-        self.railwaydb = 'postgresql://postgres:fRiINwCHRLFUJEwFGalUXMrhvJaYZwbU@autorack.proxy.rlwy.net:17593/railway'
-        # self.localhostdb = 'postgresql://postgres:grado122@localhost/grado'
+        self.dbURL = 'postgresql://postgres:fRiINwCHRLFUJEwFGalUXMrhvJaYZwbU@autorack.proxy.rlwy.net:17593/railway'
+        #self.dbURL = 'postgresql://postgres:grado122@localhost/grado'
 
         # Configurar la conexión a PostgreSQL
-        self.engine = create_engine(self.railwaydb)
+        self.engine = create_engine(self.dbURL)
 
     def load_data(self):
         # Consultas SQL para obtener los datos

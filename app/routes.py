@@ -258,13 +258,29 @@ def configure_routes(app):
         existing_interaction = UserInteraction.query.filter_by(user_id=user_id, content_id=content_id,content_type=content_type).first()
 
         if existing_interaction:
+            # Si el action es "like" y ya existe una interacción, se elimina
+            if existing_interaction.liked and action == "like":
+                db.session.delete(existing_interaction)
+                db.session.commit()
+                user_preferences.update_genre_count(genre, increment=False)
+                return jsonify({"message": "Like eliminado"}), 200
+                
+            if not existing_interaction.liked and action == "dislike":
+                db.session.delete(existing_interaction)
+                db.session.commit()
+                user_preferences.update_genre_count(genre, increment=False)
+                return jsonify({"message": "disLike eliminado"}), 200
+            
+        if existing_interaction:
             # Si el nuevo `action` es diferente al anterior, actualizamos
             if existing_interaction.liked and action == "dislike":
                 # Cambiar a dislike
                 existing_interaction.liked = False
+                db.session.commit()
             elif not existing_interaction.liked and action == "like":
                 # Cambiar a like
                 existing_interaction.liked = True
+                db.session.commit()
         else:
             # Crear una nueva interacción del usuario con el contenido
             new_interaction = UserInteraction(
@@ -280,10 +296,8 @@ def configure_routes(app):
 
             # Actualizar la preferencia del usuario
             user_preferences.update_genre_count(genre, increment=True if action == "like" else False)
-
-        # Guardar los cambios en la base de datos
-        db.session.commit()
-
+            # Guardar los cambios en la base de datos
+            db.session.commit()
         return jsonify(
             {"message": f"Se ha {'incrementado' if action == 'like' else 'decrementado'} el género {genre} en 1"}), 200
 
